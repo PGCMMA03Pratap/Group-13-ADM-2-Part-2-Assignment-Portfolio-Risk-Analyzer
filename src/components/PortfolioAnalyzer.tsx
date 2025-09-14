@@ -43,10 +43,21 @@ export function PortfolioAnalyzer() {
 
   const updateAsset = (index: number, field: keyof Asset, value: string | number) => {
     const updatedAssets = [...assets];
-    updatedAssets[index] = { 
-      ...updatedAssets[index], 
-      [field]: typeof value === 'string' ? parseFloat(value) || 0 : value 
-    };
+    
+    // Handle string fields (symbol, name) vs numeric fields
+    if (field === 'symbol' || field === 'name') {
+      updatedAssets[index] = { 
+        ...updatedAssets[index], 
+        [field]: value as string
+      };
+    } else {
+      // Handle numeric fields (weight, expectedReturn, volatility, price)
+      updatedAssets[index] = { 
+        ...updatedAssets[index], 
+        [field]: typeof value === 'string' ? parseFloat(value) || 0 : value 
+      };
+    }
+    
     setAssets(updatedAssets);
   };
 
