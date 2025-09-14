@@ -22,8 +22,8 @@ import { RiskMetricsDisplay } from '@/components/RiskMetricsDisplay';
 import { AssetAllocation } from '@/components/AssetAllocation';
 
 const defaultAssets: Asset[] = [
-  { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 25, expectedReturn: 0.13, volatility: 0.24, price: 350 },
-  { symbol: 'TSLA', name: 'Tesla Inc.', weight: 20, expectedReturn: 0.18, volatility: 0.45, price: 250 },
+  { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 20, expectedReturn: 0.13, volatility: 0.24, price: 350 },
+  { symbol: 'TSLA', name: 'Tesla Inc.', weight: 25, expectedReturn: 0.18, volatility: 0.45, price: 250 },
   { symbol: 'NVDA', name: 'NVIDIA Corp.', weight: 20, expectedReturn: 0.20, volatility: 0.35, price: 900 },
   { symbol: 'AAPL', name: 'Apple Inc.', weight: 20, expectedReturn: 0.12, volatility: 0.25, price: 150 },
   { symbol: 'GOOGL', name: 'Alphabet Inc.', weight: 15, expectedReturn: 0.15, volatility: 0.28, price: 2800 }
