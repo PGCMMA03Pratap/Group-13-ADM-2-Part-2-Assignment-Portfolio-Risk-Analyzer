@@ -16,19 +16,33 @@ export default {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        "input-hover": "hsl(var(--input-hover))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          secondary: "hsl(var(--background-secondary))",
+          tertiary: "hsl(var(--background-tertiary))",
+        },
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          glow: "hsl(var(--primary-glow))",
+          dark: "hsl(var(--primary-dark))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          light: "hsl(var(--secondary-light))",
           foreground: "hsl(var(--secondary-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          light: "hsl(var(--success-light))",
+          foreground: "hsl(var(--success-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
+          dark: "hsl(var(--destructive-dark))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
@@ -45,7 +59,9 @@ export default {
         },
         card: {
           DEFAULT: "hsl(var(--card))",
+          hover: "hsl(var(--card-hover))",
           foreground: "hsl(var(--card-foreground))",
+          border: "hsl(var(--card-border))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
