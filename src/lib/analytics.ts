@@ -10,11 +10,12 @@ const math = create(all);
  * 📊 Distribution Fitting - Statistical analysis of return patterns (lines 123-145) 
  * 📈 Comprehensive Risk Metrics - VaR, CVaR, Sharpe ratio, Beta (lines 148-205)
  * 🎯 AHP Method - Analytic Hierarchy Process for optimal weighting (lines 227-282)
+ * 🎯 TOPSIS Method - Multi-criteria decision support for asset ranking (lines 320-427)
  * 
  * 🔮 FUTURE ENHANCEMENTS:
- * - TOPSIS Elements - Multi-criteria decision support (not yet implemented)
  * - Black-Litterman Model - Enhanced portfolio optimization
  * - Copula Models - Advanced correlation modeling
+ * - Fama-French Factor Models - Multi-factor risk analysis
  */
 
 export interface Asset {
@@ -50,6 +51,21 @@ export interface RiskMetrics {
   cvar95: number;
   maxDrawdown: number;
   beta: number;
+}
+
+export interface TOPSISCriteria {
+  name: string;
+  weight: number;
+  beneficial: boolean; // true if higher values are better, false if lower values are better
+}
+
+export interface TOPSISResult {
+  assetIndex: number;
+  symbol: string;
+  score: number;
+  rank: number;
+  distanceToIdeal: number;
+  distanceToNegative: number;
 }
 
 // Normal distribution random number generator (Box-Muller)
@@ -299,5 +315,138 @@ export function calculateAHPWeights(
       weights: new Array(criteria.length).fill(1 / criteria.length), 
       consistencyRatio: 0 
     };
+  }
+}
+
+// 🎯 TOPSIS METHOD - Multi-criteria decision support for asset ranking
+// Technique for Order Preference by Similarity to Ideal Solution
+export function calculateTOPSISRanking(
+  assets: Asset[],
+  criteria: TOPSISCriteria[]
+): TOPSISResult[] {
+  try {
+    const n = assets.length;
+    const m = criteria.length;
+    
+    // Step 1: Create decision matrix with normalized values
+    const decisionMatrix: number[][] = [];
+    
+    // Extract criteria values for each asset
+    for (let i = 0; i < n; i++) {
+      const asset = assets[i];
+      const row: number[] = [];
+      
+      criteria.forEach(criterion => {
+        switch (criterion.name.toLowerCase()) {
+          case 'return':
+          case 'expectedReturn':
+            row.push(asset.expectedReturn);
+            break;
+          case 'volatility':
+          case 'risk':
+            row.push(asset.volatility);
+            break;
+          case 'sharpe':
+          case 'sharperatio':
+            const riskFreeRate = 0.02;
+            row.push((asset.expectedReturn - riskFreeRate) / asset.volatility);
+            break;
+          case 'price':
+            row.push(asset.price);
+            break;
+          default:
+            row.push(0); // Default value for unknown criteria
+        }
+      });
+      
+      decisionMatrix.push(row);
+    }
+    
+    // Step 2: Normalize the decision matrix
+    const normalizedMatrix: number[][] = [];
+    
+    for (let j = 0; j < m; j++) {
+      // Calculate sum of squares for column j
+      const sumOfSquares = decisionMatrix.reduce((sum, row) => sum + Math.pow(row[j], 2), 0);
+      const denominator = Math.sqrt(sumOfSquares);
+      
+      // Normalize each element in column j
+      for (let i = 0; i < n; i++) {
+        if (!normalizedMatrix[i]) normalizedMatrix[i] = [];
+        normalizedMatrix[i][j] = denominator !== 0 ? decisionMatrix[i][j] / denominator : 0;
+      }
+    }
+    
+    // Step 3: Calculate weighted normalized matrix
+    const weightedMatrix: number[][] = normalizedMatrix.map(row =>
+      row.map((value, j) => value * criteria[j].weight)
+    );
+    
+    // Step 4: Determine ideal and negative-ideal solutions
+    const idealSolution: number[] = [];
+    const negativeIdealSolution: number[] = [];
+    
+    for (let j = 0; j < m; j++) {
+      const columnValues = weightedMatrix.map(row => row[j]);
+      
+      if (criteria[j].beneficial) {
+        // For beneficial criteria, ideal is max, negative-ideal is min
+        idealSolution[j] = Math.max(...columnValues);
+        negativeIdealSolution[j] = Math.min(...columnValues);
+      } else {
+        // For non-beneficial criteria, ideal is min, negative-ideal is max
+        idealSolution[j] = Math.min(...columnValues);
+        negativeIdealSolution[j] = Math.max(...columnValues);
+      }
+    }
+    
+    // Step 5: Calculate distances and TOPSIS scores
+    const results: TOPSISResult[] = [];
+    
+    for (let i = 0; i < n; i++) {
+      // Distance to ideal solution
+      const distanceToIdeal = Math.sqrt(
+        weightedMatrix[i].reduce((sum, value, j) => 
+          sum + Math.pow(value - idealSolution[j], 2), 0
+        )
+      );
+      
+      // Distance to negative-ideal solution
+      const distanceToNegative = Math.sqrt(
+        weightedMatrix[i].reduce((sum, value, j) => 
+          sum + Math.pow(value - negativeIdealSolution[j], 2), 0
+        )
+      );
+      
+      // TOPSIS score (relative closeness to ideal solution)
+      const score = distanceToNegative / (distanceToIdeal + distanceToNegative);
+      
+      results.push({
+        assetIndex: i,
+        symbol: assets[i].symbol,
+        score: isNaN(score) ? 0 : score,
+        rank: 0, // Will be set after sorting
+        distanceToIdeal,
+        distanceToNegative
+      });
+    }
+    
+    // Step 6: Rank alternatives based on TOPSIS scores (higher is better)
+    results.sort((a, b) => b.score - a.score);
+    results.forEach((result, index) => {
+      result.rank = index + 1;
+    });
+    
+    return results;
+  } catch (error) {
+    console.error('TOPSIS calculation error:', error);
+    return assets.map((asset, index) => ({
+      assetIndex: index,
+      symbol: asset.symbol,
+      score: 0,
+      rank: index + 1,
+      distanceToIdeal: 0,
+      distanceToNegative: 0
+    }));
   }
 }

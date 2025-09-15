@@ -20,6 +20,7 @@ import {
 import { MonteCarloChart } from '@/components/MonteCarloChart';
 import { RiskMetricsDisplay } from '@/components/RiskMetricsDisplay';
 import { AssetAllocation } from '@/components/AssetAllocation';
+import { TOPSISRanking } from '@/components/TOPSISRanking';
 
 const defaultAssets: Asset[] = [
   { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 20, expectedReturn: 0.13, volatility: 0.24, price: 350 },
@@ -161,7 +162,7 @@ export function PortfolioAnalyzer() {
       </div>
 
       <Tabs defaultValue="portfolio" className="animate-slide-up">
-        <TabsList className="grid w-full grid-cols-4 bg-card border border-card-border">
+        <TabsList className="grid w-full grid-cols-5 bg-card border border-card-border">
           <TabsTrigger value="portfolio" className="flex items-center gap-2">
             <PieChart className="w-4 h-4" />
             Portfolio
@@ -177,6 +178,10 @@ export function PortfolioAnalyzer() {
           <TabsTrigger value="risk" className="flex items-center gap-2">
             <Target className="w-4 h-4" />
             Risk Metrics
+          </TabsTrigger>
+          <TabsTrigger value="topsis" className="flex items-center gap-2">
+            <Target className="w-4 h-4" />
+            TOPSIS
           </TabsTrigger>
         </TabsList>
 
@@ -406,6 +411,11 @@ export function PortfolioAnalyzer() {
               </CardContent>
             </Card>
           )}
+        </TabsContent>
+
+        {/* TOPSIS Analysis */}
+        <TabsContent value="topsis" className="space-y-6">
+          <TOPSISRanking assets={assets} />
         </TabsContent>
       </Tabs>
     </div>
