@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { TrendingUp, TrendingDown, BarChart3, PieChart, Calculator, Target } from 'lucide-react';
+import { BookOpen, TrendingUp, TrendingDown, BarChart3, PieChart, Calculator, Target } from 'lucide-react';
 import { toast } from 'sonner';
 import { 
   Asset, 
@@ -20,6 +20,7 @@ import {
 import { MonteCarloChart } from '@/components/MonteCarloChart';
 import { RiskMetricsDisplay } from '@/components/RiskMetricsDisplay';
 import { AssetAllocation } from '@/components/AssetAllocation';
+import { Tutorial } from '@/components/Tutorial';
 import { TOPSISRanking } from '@/components/TOPSISRanking';
 
 const defaultAssets: Asset[] = [
@@ -162,7 +163,11 @@ export function PortfolioAnalyzer() {
       </div>
 
       <Tabs defaultValue="portfolio" className="animate-slide-up">
-        <TabsList className="grid w-full grid-cols-5 bg-card border border-card-border">
+        <TabsList className="grid w-full grid-cols-6 bg-card border border-card-border">
+          <TabsTrigger value="tutorial" className="flex items-center gap-2">
+            <BookOpen className="w-4 h-4" />
+            Tutorial
+          </TabsTrigger>
           <TabsTrigger value="portfolio" className="flex items-center gap-2">
             <PieChart className="w-4 h-4" />
             Portfolio
@@ -184,6 +189,11 @@ export function PortfolioAnalyzer() {
             TOPSIS
           </TabsTrigger>
         </TabsList>
+
+        {/* Tutorial */}
+        <TabsContent value="tutorial" className="space-y-6">
+          <Tutorial />
+        </TabsContent>
 
         {/* Portfolio Configuration */}
         <TabsContent value="portfolio" className="space-y-6">
