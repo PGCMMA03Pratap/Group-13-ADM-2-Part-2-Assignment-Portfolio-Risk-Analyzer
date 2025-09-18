@@ -12,6 +12,14 @@ export function DownloadReport() {
     link.click();
   };
 
+  const downloadWordReport = () => {
+    const reportUrl = '/portfolio-analyzer-report.html';
+    const link = document.createElement('a');
+    link.href = reportUrl;
+    link.download = 'Portfolio-Analyzer-Comprehensive-Report.html';
+    link.click();
+  };
+
   return (
     <Card className="card-financial">
       <CardHeader>
@@ -27,9 +35,17 @@ export function DownloadReport() {
         <div className="space-y-3">
           <h4 className="font-medium">📄 Comprehensive Project Report</h4>
           <p className="text-sm text-muted-foreground">
-            Download the complete technical documentation including methodology explanations, 
-            real-world applications, implementation details, and performance metrics.
+            Download the complete technical documentation in your preferred format. The HTML version 
+            can be opened in Microsoft Word for editing and submission as a Word document.
           </p>
+          
+          <div className="bg-muted/30 p-4 rounded-lg space-y-2">
+            <h5 className="font-medium text-sm">Available Formats:</h5>
+            <ul className="text-xs space-y-1">
+              <li>• <strong>Markdown (.md):</strong> Plain text format, readable in any text editor</li>
+              <li>• <strong>HTML (.html):</strong> Web format, can be opened in Word for .docx conversion</li>
+            </ul>
+          </div>
           
           <div className="bg-muted/30 p-4 rounded-lg space-y-2">
             <h5 className="font-medium text-sm">Report Contents:</h5>
@@ -45,10 +61,17 @@ export function DownloadReport() {
             </ul>
           </div>
           
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <Button onClick={downloadReport} className="flex items-center gap-2">
               <Download className="w-4 h-4" />
               Download Report (Markdown)
+            </Button>
+            <Button 
+              onClick={downloadWordReport} 
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+            >
+              <Download className="w-4 h-4" />
+              Download Report (Word)
             </Button>
             <Button 
               variant="outline" 
@@ -56,7 +79,15 @@ export function DownloadReport() {
               className="flex items-center gap-2"
             >
               <ExternalLink className="w-4 h-4" />
-              View Online
+              View Markdown
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => window.open('/portfolio-analyzer-report.html', '_blank')}
+              className="flex items-center gap-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              View HTML Report
             </Button>
           </div>
         </div>
