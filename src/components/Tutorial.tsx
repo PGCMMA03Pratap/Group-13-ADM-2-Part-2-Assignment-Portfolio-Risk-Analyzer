@@ -210,27 +210,27 @@ export function Tutorial() {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold">💡 Best Practices</h3>
                   <div className="space-y-3">
-                    <div className="p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                    <div className="p-3 rounded-lg bg-success/10 border border-success/20">
                       <div className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-600 mt-0.5" />
+                        <CheckCircle className="w-4 h-4 text-success mt-0.5" />
                         <div>
-                          <p className="text-sm"><strong>Diversification:</strong> Include assets from different sectors and regions</p>
+                          <p className="text-sm text-card-foreground"><strong>Diversification:</strong> Include assets from different sectors and regions</p>
                         </div>
                       </div>
                     </div>
-                    <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                    <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
                       <div className="flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5" />
+                        <AlertCircle className="w-4 h-4 text-primary mt-0.5" />
                         <div>
-                          <p className="text-sm"><strong>Historical Data:</strong> Use 3-5 years of historical data for return/volatility estimates</p>
+                          <p className="text-sm text-card-foreground"><strong>Historical Data:</strong> Use 3-5 years of historical data for return/volatility estimates</p>
                         </div>
                       </div>
                     </div>
-                    <div className="p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
+                    <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
                       <div className="flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 text-yellow-600 mt-0.5" />
+                        <AlertCircle className="w-4 h-4 text-secondary mt-0.5" />
                         <div>
-                          <p className="text-sm"><strong>Correlation:</strong> Consider asset correlations - avoid overconcentration in correlated assets</p>
+                          <p className="text-sm text-card-foreground"><strong>Correlation:</strong> Consider asset correlations - avoid overconcentration in correlated assets</p>
                         </div>
                       </div>
                     </div>
