@@ -486,16 +486,16 @@ export function Tutorial() {
                     <Building2 className="w-6 h-6 text-blue-500" />
                     <h3 className="text-lg font-semibold">Investment Banking</h3>
                   </div>
-                  <div className="space-y-2">
-                    <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20">
-                      <h4 className="font-medium text-sm">Trading Desks</h4>
-                      <p className="text-xs text-muted-foreground">Daily VaR calculations, stress testing, portfolio optimization</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20">
-                      <h4 className="font-medium text-sm">Risk Management</h4>
-                      <p className="text-xs text-muted-foreground">Basel III compliance, capital allocation, limit monitoring</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Trading Desks</h4>
+                       <p className="text-xs text-muted-foreground">Daily VaR calculations, stress testing, portfolio optimization</p>
+                     </div>
+                     <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Risk Management</h4>
+                       <p className="text-xs text-muted-foreground">Basel III compliance, capital allocation, limit monitoring</p>
+                     </div>
+                   </div>
                 </div>
 
                 {/* Asset Management */}
@@ -504,16 +504,16 @@ export function Tutorial() {
                     <TrendingUp className="w-6 h-6 text-green-500" />
                     <h3 className="text-lg font-semibold">Asset Management</h3>
                   </div>
-                  <div className="space-y-2">
-                    <div className="p-3 rounded-lg bg-green-50 dark:bg-green-900/20">
-                      <h4 className="font-medium text-sm">Fund Construction</h4>
-                      <p className="text-xs text-muted-foreground">Strategic asset allocation, factor exposure analysis</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-green-50 dark:bg-green-900/20">
-                      <h4 className="font-medium text-sm">Performance Attribution</h4>
-                      <p className="text-xs text-muted-foreground">Risk-adjusted returns, benchmark analysis, alpha generation</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="p-3 rounded-lg bg-success/10 border border-success/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Fund Construction</h4>
+                       <p className="text-xs text-muted-foreground">Strategic asset allocation, factor exposure analysis</p>
+                     </div>
+                     <div className="p-3 rounded-lg bg-success/10 border border-success/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Performance Attribution</h4>
+                       <p className="text-xs text-muted-foreground">Risk-adjusted returns, benchmark analysis, alpha generation</p>
+                     </div>
+                   </div>
                 </div>
 
                 {/* Insurance */}
@@ -522,16 +522,16 @@ export function Tutorial() {
                     <Users className="w-6 h-6 text-purple-500" />
                     <h3 className="text-lg font-semibold">Insurance</h3>
                   </div>
-                  <div className="space-y-2">
-                    <div className="p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20">
-                      <h4 className="font-medium text-sm">Liability Matching</h4>
-                      <p className="text-xs text-muted-foreground">Duration matching, cash flow modeling, ALM optimization</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20">
-                      <h4 className="font-medium text-sm">Solvency Capital</h4>
-                      <p className="text-xs text-muted-foreground">Solvency II requirements, economic capital modeling</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Liability Matching</h4>
+                       <p className="text-xs text-muted-foreground">Duration matching, cash flow modeling, ALM optimization</p>
+                     </div>
+                     <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Solvency Capital</h4>
+                       <p className="text-xs text-muted-foreground">Solvency II requirements, economic capital modeling</p>
+                     </div>
+                   </div>
                 </div>
 
                 {/* Pension Funds */}
@@ -540,16 +540,16 @@ export function Tutorial() {
                     <GraduationCap className="w-6 h-6 text-orange-500" />
                     <h3 className="text-lg font-semibold">Pension Funds</h3>
                   </div>
-                  <div className="space-y-2">
-                    <div className="p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20">
-                      <h4 className="font-medium text-sm">Long-term Planning</h4>
-                      <p className="text-xs text-muted-foreground">30+ year projections, demographic modeling, funding ratios</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-orange-50 dark:bg-orange-900/20">
-                      <h4 className="font-medium text-sm">De-risking Strategies</h4>
-                      <p className="text-xs text-muted-foreground">Glide path optimization, liability hedging portfolios</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="p-3 rounded-lg bg-accent/30 border border-accent/40">
+                       <h4 className="font-medium text-sm text-card-foreground">Long-term Planning</h4>
+                       <p className="text-xs text-muted-foreground">30+ year projections, demographic modeling, funding ratios</p>
+                     </div>
+                     <div className="p-3 rounded-lg bg-accent/30 border border-accent/40">
+                       <h4 className="font-medium text-sm text-card-foreground">De-risking Strategies</h4>
+                       <p className="text-xs text-muted-foreground">Glide path optimization, liability hedging portfolios</p>
+                     </div>
+                   </div>
                 </div>
 
                 {/* Hedge Funds */}
@@ -558,16 +558,16 @@ export function Tutorial() {
                     <BarChart3 className="w-6 h-6 text-red-500" />
                     <h3 className="text-lg font-semibold">Hedge Funds</h3>
                   </div>
-                  <div className="space-y-2">
-                    <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20">
-                      <h4 className="font-medium text-sm">Alternative Strategies</h4>
-                      <p className="text-xs text-muted-foreground">Long/short equity, market neutral, statistical arbitrage</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/20">
-                      <h4 className="font-medium text-sm">Risk Budgeting</h4>
-                      <p className="text-xs text-muted-foreground">Position sizing, leverage optimization, drawdown management</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Alternative Strategies</h4>
+                       <p className="text-xs text-muted-foreground">Long/short equity, market neutral, statistical arbitrage</p>
+                     </div>
+                     <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                       <h4 className="font-medium text-sm text-card-foreground">Risk Budgeting</h4>
+                       <p className="text-xs text-muted-foreground">Position sizing, leverage optimization, drawdown management</p>
+                     </div>
+                   </div>
                 </div>
 
                 {/* Regulatory Bodies */}
@@ -576,16 +576,16 @@ export function Tutorial() {
                     <AlertCircle className="w-6 h-6 text-indigo-500" />
                     <h3 className="text-lg font-semibold">Regulators</h3>
                   </div>
-                  <div className="space-y-2">
-                    <div className="p-3 rounded-lg bg-indigo-50 dark:bg-indigo-900/20">
-                      <h4 className="font-medium text-sm">Stress Testing</h4>
-                      <p className="text-xs text-muted-foreground">CCAR, DFAST, systemic risk assessment, macro scenarios</p>
-                    </div>
-                    <div className="p-3 rounded-lg bg-indigo-50 dark:bg-indigo-900/20">
-                      <h4 className="font-medium text-sm">Market Surveillance</h4>
-                      <p className="text-xs text-muted-foreground">Systemic risk monitoring, interconnectedness analysis</p>
-                    </div>
-                  </div>
+                   <div className="space-y-2">
+                     <div className="p-3 rounded-lg bg-muted/30 border border-border">
+                       <h4 className="font-medium text-sm text-card-foreground">Stress Testing</h4>
+                       <p className="text-xs text-muted-foreground">CCAR, DFAST, systemic risk assessment, macro scenarios</p>
+                     </div>
+                     <div className="p-3 rounded-lg bg-muted/30 border border-border">
+                       <h4 className="font-medium text-sm text-card-foreground">Market Surveillance</h4>
+                       <p className="text-xs text-muted-foreground">Systemic risk monitoring, interconnectedness analysis</p>
+                     </div>
+                   </div>
                 </div>
               </div>
             </CardContent>
