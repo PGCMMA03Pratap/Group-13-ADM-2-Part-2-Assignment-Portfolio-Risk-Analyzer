@@ -41,6 +41,29 @@ export interface MonteCarloResult {
   expectedReturn: number;
   volatility: number;
   sharpeRatio: number;
+  timeHorizonDays: number;
+  multiPeriodProjections?: MultiPeriodProjection[];
+}
+
+export interface MultiPeriodProjection {
+  period: string;
+  timeHorizonDays: number;
+  percentiles: {
+    p5: number;
+    p25: number;
+    p50: number;
+    p75: number;
+    p95: number;
+  };
+  totalReturn: {
+    p5: number;
+    p25: number;
+    p50: number;
+    p75: number;
+    p95: number;
+  };
+  annualizedReturn: number;
+  probabilityOfLoss: number;
 }
 
 export interface RiskMetrics {
@@ -51,6 +74,9 @@ export interface RiskMetrics {
   cvar95: number;
   maxDrawdown: number;
   beta: number;
+  skewness?: number;
+  kurtosis?: number;
+  volatility?: number;
 }
 
 export interface TOPSISCriteria {
@@ -100,7 +126,8 @@ export function runMonteCarloSimulation(
   assets: Asset[],
   initialValue: number = 100000,
   timeHorizon: number = 252, // trading days in a year
-  simulations: number = 10000
+  simulations: number = 10000,
+  includeMultiPeriod: boolean = true
 ): MonteCarloResult {
   const { expectedReturn, volatility } = calculatePortfolioMetrics(assets);
   
@@ -143,6 +170,10 @@ export function runMonteCarloSimulation(
   const riskFreeRate = 0.02;
   const sharpeRatio = (expectedReturn - riskFreeRate) / volatility;
   
+  // Calculate multi-period projections if requested
+  const multiPeriodProjections = includeMultiPeriod ? 
+    calculateMultiPeriodProjections(assets, initialValue, simulations) : undefined;
+
   return {
     finalValues,
     returns,
@@ -150,7 +181,9 @@ export function runMonteCarloSimulation(
     var95,
     expectedReturn,
     volatility,
-    sharpeRatio
+    sharpeRatio,
+    timeHorizonDays: timeHorizon,
+    multiPeriodProjections
   };
 }
 
@@ -238,6 +271,80 @@ export function calculateRiskMetrics(
     maxDrawdown,
     beta
   };
+}
+
+// Calculate multi-period projections for different time horizons
+export function calculateMultiPeriodProjections(
+  assets: Asset[],
+  initialValue: number,
+  simulations: number = 10000
+): MultiPeriodProjection[] {
+  const { expectedReturn, volatility } = calculatePortfolioMetrics(assets);
+  const dailyReturn = expectedReturn / 252;
+  const dailyVolatility = volatility / Math.sqrt(252);
+
+  // Define standard time periods (in trading days)
+  const periods = [
+    { name: '1 Year', days: 252 },
+    { name: '3 Years', days: 252 * 3 },
+    { name: '5 Years', days: 252 * 5 },
+    { name: '10 Years', days: 252 * 10 },
+    { name: '15 Years', days: 252 * 15 },
+    { name: '20 Years', days: 252 * 20 }
+  ];
+
+  return periods.map(period => {
+    const finalValues: number[] = [];
+    
+    // Run simulations for this specific period
+    for (let i = 0; i < simulations; i++) {
+      let portfolioValue = initialValue;
+      
+      for (let day = 0; day < period.days; day++) {
+        const dailyGrowth = normalRandom(dailyReturn, dailyVolatility);
+        portfolioValue *= (1 + dailyGrowth);
+      }
+      
+      finalValues.push(portfolioValue);
+    }
+    
+    // Sort for percentile calculations
+    const sortedValues = [...finalValues].sort((a, b) => a - b);
+    
+    const percentiles = {
+      p5: sortedValues[Math.floor(0.05 * simulations)],
+      p25: sortedValues[Math.floor(0.25 * simulations)],
+      p50: sortedValues[Math.floor(0.50 * simulations)],
+      p75: sortedValues[Math.floor(0.75 * simulations)],
+      p95: sortedValues[Math.floor(0.95 * simulations)]
+    };
+    
+    // Calculate total returns
+    const totalReturn = {
+      p5: ((percentiles.p5 - initialValue) / initialValue) * 100,
+      p25: ((percentiles.p25 - initialValue) / initialValue) * 100,
+      p50: ((percentiles.p50 - initialValue) / initialValue) * 100,
+      p75: ((percentiles.p75 - initialValue) / initialValue) * 100,
+      p95: ((percentiles.p95 - initialValue) / initialValue) * 100
+    };
+    
+    // Calculate annualized return (median)
+    const years = period.days / 252;
+    const annualizedReturn = (Math.pow(percentiles.p50 / initialValue, 1 / years) - 1) * 100;
+    
+    // Calculate probability of loss
+    const lossCount = finalValues.filter(value => value < initialValue).length;
+    const probabilityOfLoss = (lossCount / simulations) * 100;
+    
+    return {
+      period: period.name,
+      timeHorizonDays: period.days,
+      percentiles,
+      totalReturn,
+      annualizedReturn,
+      probabilityOfLoss
+    };
+  });
 }
 
 // Generate sample historical data for demonstration

@@ -135,15 +135,39 @@ export const exportResultsToExcel = (
   const parametersWs = XLSX.utils.json_to_sheet(parametersData);
   XLSX.utils.book_append_sheet(wb, parametersWs, 'Parameters');
 
+  // Multi-Period Projections
+  if (results?.multiPeriodProjections) {
+    const projectionData = results.multiPeriodProjections.map((projection: any) => ({
+      'Time Period': projection.period,
+      'Expected Value': `$${projection.percentiles.p50.toFixed(2)}`,
+      'Total Return (Median)': `${projection.totalReturn.p50.toFixed(2)}%`,
+      'Annualized Return': `${projection.annualizedReturn.toFixed(2)}%`,
+      'Probability of Loss': `${projection.probabilityOfLoss.toFixed(2)}%`,
+      '5th Percentile Value': `$${projection.percentiles.p5.toFixed(2)}`,
+      '25th Percentile Value': `$${projection.percentiles.p25.toFixed(2)}`,
+      '75th Percentile Value': `$${projection.percentiles.p75.toFixed(2)}`,
+      '95th Percentile Value': `$${projection.percentiles.p95.toFixed(2)}`,
+      '5th Percentile Return': `${projection.totalReturn.p5.toFixed(2)}%`,
+      '25th Percentile Return': `${projection.totalReturn.p25.toFixed(2)}%`,
+      '75th Percentile Return': `${projection.totalReturn.p75.toFixed(2)}%`,
+      '95th Percentile Return': `${projection.totalReturn.p95.toFixed(2)}%`
+    }));
+    
+    const projectionWs = XLSX.utils.json_to_sheet(projectionData);
+    XLSX.utils.book_append_sheet(wb, projectionWs, 'Multi-Period Projections');
+  }
+
   // Monte Carlo Results
   if (results) {
     const resultsData = [
-      { Metric: 'Mean Final Value', Value: `$${results.mean.toFixed(2)}` },
-      { Metric: 'Median Final Value (P50)', Value: `$${results.median.toFixed(2)}` },
-      { Metric: '5th Percentile (P5)', Value: `$${results.percentile5.toFixed(2)}` },
-      { Metric: '95th Percentile (P95)', Value: `$${results.percentile95.toFixed(2)}` },
-      { Metric: 'Standard Deviation', Value: `$${results.stdDev.toFixed(2)}` },
-      { Metric: 'Probability of Loss', Value: `${results.probabilityOfLoss.toFixed(2)}%` }
+      { Metric: 'Mean Final Value', Value: `$${results.mean?.toFixed(2) || 'N/A'}` },
+      { Metric: 'Median Final Value (P50)', Value: `$${results.percentiles?.p50?.toFixed(2) || 'N/A'}` },
+      { Metric: '5th Percentile (P5)', Value: `$${results.percentiles?.p5?.toFixed(2) || 'N/A'}` },
+      { Metric: '95th Percentile (P95)', Value: `$${results.percentiles?.p95?.toFixed(2) || 'N/A'}` },
+      { Metric: 'Standard Deviation', Value: `$${results.stdDev?.toFixed(2) || 'N/A'}` },
+      { Metric: 'Expected Return', Value: `${((results.expectedReturn || 0) * 100).toFixed(2)}%` },
+      { Metric: 'Portfolio Volatility', Value: `${((results.volatility || 0) * 100).toFixed(2)}%` },
+      { Metric: 'Sharpe Ratio', Value: results.sharpeRatio?.toFixed(3) || 'N/A' }
     ];
     
     const resultsWs = XLSX.utils.json_to_sheet(resultsData);
@@ -153,14 +177,13 @@ export const exportResultsToExcel = (
   // Risk Metrics
   if (riskMetrics) {
     const riskData = [
-      { Metric: 'Value at Risk (95%)', Value: `$${Math.abs(riskMetrics.var95).toFixed(2)}` },
-      { Metric: 'Conditional VaR', Value: `$${Math.abs(riskMetrics.cvar).toFixed(2)}` },
-      { Metric: 'Maximum Drawdown', Value: `${(riskMetrics.maxDrawdown * 100).toFixed(2)}%` },
-      { Metric: 'Sharpe Ratio', Value: riskMetrics.sharpeRatio.toFixed(3) },
-      { Metric: 'Portfolio Beta', Value: riskMetrics.beta.toFixed(3) },
-      { Metric: 'Annual Volatility', Value: `${(riskMetrics.volatility * 100).toFixed(2)}%` },
-      { Metric: 'Skewness', Value: riskMetrics.skewness.toFixed(3) },
-      { Metric: 'Kurtosis', Value: riskMetrics.kurtosis.toFixed(3) }
+      { Metric: 'Value at Risk (95%)', Value: `$${Math.abs(riskMetrics.var95 || 0).toFixed(2)}` },
+      { Metric: 'Conditional VaR', Value: `$${Math.abs(riskMetrics.cvar95 || 0).toFixed(2)}` },
+      { Metric: 'Maximum Drawdown', Value: `${((riskMetrics.maxDrawdown || 0) * 100).toFixed(2)}%` },
+      { Metric: 'Sharpe Ratio', Value: (riskMetrics.sharpeRatio || 0).toFixed(3) },
+      { Metric: 'Portfolio Beta', Value: (riskMetrics.beta || 0).toFixed(3) },
+      { Metric: 'Portfolio Return', Value: `${((riskMetrics.portfolioReturn || 0) * 100).toFixed(2)}%` },
+      { Metric: 'Portfolio Volatility', Value: `${((riskMetrics.portfolioVolatility || 0) * 100).toFixed(2)}%` }
     ];
     
     const riskWs = XLSX.utils.json_to_sheet(riskData);

@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { TrendingUp, TrendingDown, Target, DollarSign } from 'lucide-react';
 import { MonteCarloResult } from '@/lib/analytics';
+import { MultiPeriodProjections } from '@/components/MultiPeriodProjections';
 
 interface MonteCarloChartProps {
   results: MonteCarloResult;
@@ -81,6 +82,14 @@ export function MonteCarloChart({ results, initialValue }: MonteCarloChartProps)
 
   return (
     <div className="space-y-6">
+      {/* Multi-Period Projections */}
+      {results.multiPeriodProjections && (
+        <MultiPeriodProjections 
+          projections={results.multiPeriodProjections} 
+          initialValue={initialValue} 
+        />
+      )}
+
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="card-metric animate-counter">
