@@ -210,30 +210,30 @@ export function Tutorial() {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold">💡 Best Practices</h3>
                   <div className="space-y-3">
-                    <div className="p-3 rounded-lg bg-success/10 border border-success/20">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                        <div>
-                          <p className="text-sm text-card-foreground"><strong>Diversification:</strong> Include assets from different sectors and regions</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
-                      <div className="flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 text-primary mt-0.5" />
-                        <div>
-                          <p className="text-sm text-card-foreground"><strong>Historical Data:</strong> Use 3-5 years of historical data for return/volatility estimates</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
-                      <div className="flex items-start gap-2">
-                        <AlertCircle className="w-4 h-4 text-secondary mt-0.5" />
-                        <div>
-                          <p className="text-sm text-card-foreground"><strong>Correlation:</strong> Consider asset correlations - avoid overconcentration in correlated assets</p>
-                        </div>
-                      </div>
-                    </div>
+                     <div className="p-3 rounded-lg bg-success/10 border border-success/20">
+                       <div className="flex items-start gap-2">
+                         <CheckCircle className="w-4 h-4 text-success mt-0.5" />
+                         <div>
+                           <p className="text-sm text-foreground"><strong>Diversification:</strong> Include assets from different sectors and regions</p>
+                         </div>
+                       </div>
+                     </div>
+                     <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
+                       <div className="flex items-start gap-2">
+                         <AlertCircle className="w-4 h-4 text-primary mt-0.5" />
+                         <div>
+                           <p className="text-sm text-foreground"><strong>Historical Data:</strong> Use 3-5 years of historical data for return/volatility estimates</p>
+                         </div>
+                       </div>
+                     </div>
+                     <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
+                       <div className="flex items-start gap-2">
+                         <AlertCircle className="w-4 h-4 text-secondary mt-0.5" />
+                         <div>
+                           <p className="text-sm text-foreground"><strong>Correlation:</strong> Consider asset correlations - avoid overconcentration in correlated assets</p>
+                         </div>
+                       </div>
+                     </div>
                   </div>
                 </div>
               </div>
@@ -488,11 +488,11 @@ export function Tutorial() {
                   </div>
                    <div className="space-y-2">
                      <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
-                       <h4 className="font-medium text-sm text-card-foreground">Trading Desks</h4>
+                       <h4 className="font-medium text-sm text-foreground">Trading Desks</h4>
                        <p className="text-xs text-muted-foreground">Daily VaR calculations, stress testing, portfolio optimization</p>
                      </div>
                      <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
-                       <h4 className="font-medium text-sm text-card-foreground">Risk Management</h4>
+                       <h4 className="font-medium text-sm text-foreground">Risk Management</h4>
                        <p className="text-xs text-muted-foreground">Basel III compliance, capital allocation, limit monitoring</p>
                      </div>
                    </div>
@@ -506,11 +506,11 @@ export function Tutorial() {
                   </div>
                    <div className="space-y-2">
                      <div className="p-3 rounded-lg bg-success/10 border border-success/20">
-                       <h4 className="font-medium text-sm text-card-foreground">Fund Construction</h4>
+                       <h4 className="font-medium text-sm text-foreground">Fund Construction</h4>
                        <p className="text-xs text-muted-foreground">Strategic asset allocation, factor exposure analysis</p>
                      </div>
                      <div className="p-3 rounded-lg bg-success/10 border border-success/20">
-                       <h4 className="font-medium text-sm text-card-foreground">Performance Attribution</h4>
+                       <h4 className="font-medium text-sm text-foreground">Performance Attribution</h4>
                        <p className="text-xs text-muted-foreground">Risk-adjusted returns, benchmark analysis, alpha generation</p>
                      </div>
                    </div>
@@ -524,11 +524,11 @@ export function Tutorial() {
                   </div>
                    <div className="space-y-2">
                      <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
-                       <h4 className="font-medium text-sm text-card-foreground">Liability Matching</h4>
+                       <h4 className="font-medium text-sm text-foreground">Liability Matching</h4>
                        <p className="text-xs text-muted-foreground">Duration matching, cash flow modeling, ALM optimization</p>
                      </div>
                      <div className="p-3 rounded-lg bg-secondary/10 border border-secondary/20">
-                       <h4 className="font-medium text-sm text-card-foreground">Solvency Capital</h4>
+                       <h4 className="font-medium text-sm text-foreground">Solvency Capital</h4>
                        <p className="text-xs text-muted-foreground">Solvency II requirements, economic capital modeling</p>
                      </div>
                    </div>
@@ -542,11 +542,11 @@ export function Tutorial() {
                   </div>
                    <div className="space-y-2">
                      <div className="p-3 rounded-lg bg-accent/30 border border-accent/40">
-                       <h4 className="font-medium text-sm text-card-foreground">Long-term Planning</h4>
+                       <h4 className="font-medium text-sm text-foreground">Long-term Planning</h4>
                        <p className="text-xs text-muted-foreground">30+ year projections, demographic modeling, funding ratios</p>
                      </div>
                      <div className="p-3 rounded-lg bg-accent/30 border border-accent/40">
-                       <h4 className="font-medium text-sm text-card-foreground">De-risking Strategies</h4>
+                       <h4 className="font-medium text-sm text-foreground">De-risking Strategies</h4>
                        <p className="text-xs text-muted-foreground">Glide path optimization, liability hedging portfolios</p>
                      </div>
                    </div>

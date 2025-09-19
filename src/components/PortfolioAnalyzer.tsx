@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, TrendingUp, TrendingDown, BarChart3, PieChart, Calculator, Target } from 'lucide-react';
+import { BookOpen, TrendingUp, TrendingDown, BarChart3, PieChart, Calculator, Target, Upload, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import { 
   Asset, 
@@ -17,6 +17,7 @@ import {
   calculateAHPWeights,
   generateSampleData
 } from '@/lib/analytics';
+import { downloadTemplateExcel, parseExcelFile, exportResultsToExcel } from '@/lib/excelUtils';
 import { MonteCarloChart } from '@/components/MonteCarloChart';
 import { RiskMetricsDisplay } from '@/components/RiskMetricsDisplay';
 import { AssetAllocation } from '@/components/AssetAllocation';
@@ -91,6 +92,32 @@ export function PortfolioAnalyzer() {
       setAssets(normalizedAssets);
       toast.success('Portfolio weights normalized to 100%');
     }
+  };
+
+  const handleExcelUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const parsedAssets = await parseExcelFile(file);
+      setAssets(parsedAssets);
+      toast.success(`Successfully imported ${parsedAssets.length} assets from Excel`);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to import Excel file');
+    } finally {
+      // Reset the input
+      event.target.value = '';
+    }
+  };
+
+  const handleDownloadResults = () => {
+    if (!results || !riskMetrics) {
+      toast.error('Please run the analysis first to generate results');
+      return;
+    }
+    
+    exportResultsToExcel(assets, results, riskMetrics, initialValue, timeHorizon, simulations);
+    toast.success('Results exported to Excel successfully');
   };
 
   const runAnalysis = async () => {
@@ -302,10 +329,31 @@ export function PortfolioAnalyzer() {
                 </div>
               ))}
               
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Button onClick={addAsset} className="btn-financial-secondary">
                   Add Asset
                 </Button>
+                <Button 
+                  onClick={downloadTemplateExcel} 
+                  variant="outline" 
+                  className="btn-financial-secondary"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download Template
+                </Button>
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept=".xlsx,.xls"
+                    onChange={handleExcelUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    id="excel-upload"
+                  />
+                  <Button variant="outline" className="btn-financial-secondary">
+                    <Upload className="w-4 h-4 mr-2" />
+                    Upload Excel
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -390,7 +438,19 @@ export function PortfolioAnalyzer() {
         {/* Results */}
         <TabsContent value="results" className="space-y-6">
           {results ? (
-            <MonteCarloChart results={results} initialValue={initialValue} />
+            <div className="space-y-6">
+              <div className="flex justify-end">
+                <Button 
+                  onClick={handleDownloadResults}
+                  variant="outline"
+                  className="btn-financial-secondary"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Export to Excel
+                </Button>
+              </div>
+              <MonteCarloChart results={results} initialValue={initialValue} />
+            </div>
           ) : (
             <Card className="card-financial">
               <CardContent className="flex items-center justify-center h-64">
