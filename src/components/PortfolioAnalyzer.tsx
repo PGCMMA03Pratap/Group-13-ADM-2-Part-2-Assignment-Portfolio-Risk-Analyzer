@@ -23,6 +23,7 @@ import { RiskMetricsDisplay } from '@/components/RiskMetricsDisplay';
 import { AssetAllocation } from '@/components/AssetAllocation';
 import { Tutorial } from '@/components/Tutorial';
 import { TOPSISRanking } from '@/components/TOPSISRanking';
+import { PortfolioRecommendations } from '@/components/PortfolioRecommendations';
 
 const defaultAssets: Asset[] = [
   { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 20, expectedReturn: 0.13, volatility: 0.24, price: 350 },
@@ -190,7 +191,7 @@ export function PortfolioAnalyzer() {
       </div>
 
       <Tabs defaultValue="portfolio" className="animate-slide-up">
-        <TabsList className="grid w-full grid-cols-6 bg-card border border-card-border">
+        <TabsList className="grid w-full grid-cols-7 bg-card border border-card-border">
           <TabsTrigger value="tutorial" className="flex items-center gap-2">
             <BookOpen className="w-4 h-4" />
             Tutorial
@@ -198,6 +199,10 @@ export function PortfolioAnalyzer() {
           <TabsTrigger value="portfolio" className="flex items-center gap-2">
             <PieChart className="w-4 h-4" />
             Portfolio
+          </TabsTrigger>
+          <TabsTrigger value="recommendations" className="flex items-center gap-2">
+            <Target className="w-4 h-4" />
+            Recommendations
           </TabsTrigger>
           <TabsTrigger value="simulation" className="flex items-center gap-2">
             <Calculator className="w-4 h-4" />
@@ -359,6 +364,11 @@ export function PortfolioAnalyzer() {
           </Card>
 
           {assets.length > 0 && <AssetAllocation assets={assets} />}
+        </TabsContent>
+
+        {/* Portfolio Recommendations */}
+        <TabsContent value="recommendations" className="space-y-6">
+          <PortfolioRecommendations assets={assets} />
         </TabsContent>
 
         {/* Simulation Parameters */}
