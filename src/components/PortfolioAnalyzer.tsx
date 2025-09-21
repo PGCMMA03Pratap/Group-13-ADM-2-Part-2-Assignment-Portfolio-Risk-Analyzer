@@ -183,53 +183,95 @@ export function PortfolioAnalyzer() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-4 animate-fade-in">
-        <div className="flex items-center justify-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-r from-primary to-secondary">
-            <BarChart3 className="w-8 h-8 text-primary-foreground" />
-          </div>
-          <div>
-            <h1 className="text-4xl font-bold text-gradient-primary">
-              Portfolio Risk Analyzer
-            </h1>
-            <p className="text-lg text-muted-foreground mt-2">
-              Advanced Monte Carlo simulation with risk analytics
-            </p>
+    <div className="min-h-screen bg-background animate-fade-in">
+      {/* Enhanced Hero Section */}
+      <div className="relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        </div>
+        
+        <div className="relative z-10 text-center py-16 px-4">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <div className="animate-slide-up">
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="p-4 rounded-2xl bg-gradient-to-br from-primary via-secondary to-primary-glow animate-glow">
+                  <BarChart3 className="w-12 h-12 text-primary-foreground" />
+                </div>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold mb-6">
+                <span className="text-gradient-primary">Advanced Portfolio</span>
+                <br />
+                <span className="text-foreground">Analytics Suite</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Harness the power of Monte Carlo simulations, risk analytics, and AI-driven insights 
+                to optimize your investment portfolio with institutional-grade precision.
+              </p>
+            </div>
+            
+            <div className="animate-fade-in" style={{ animationDelay: '300ms' }}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-12">
+                <div className="glass-card p-6 rounded-2xl text-center hover:scale-105 transition-all duration-300">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl mx-auto mb-4 flex items-center justify-center animate-glow">
+                    <Calculator className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-gradient-primary">Monte Carlo Simulation</h3>
+                  <p className="text-sm text-muted-foreground">Advanced probabilistic modeling for portfolio performance prediction</p>
+                </div>
+                
+                <div className="glass-card p-6 rounded-2xl text-center hover:scale-105 transition-all duration-300" style={{ animationDelay: '100ms' }}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-success to-success-light rounded-xl mx-auto mb-4 flex items-center justify-center animate-glow">
+                    <Target className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-gradient-success">Risk Analytics</h3>
+                  <p className="text-sm text-muted-foreground">Comprehensive risk metrics including VaR, CVaR, and Sharpe ratios</p>
+                </div>
+                
+                <div className="glass-card p-6 rounded-2xl text-center hover:scale-105 transition-all duration-300" style={{ animationDelay: '200ms' }}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-xl mx-auto mb-4 flex items-center justify-center animate-glow">
+                    <TrendingUp className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">TOPSIS Ranking</h3>
+                  <p className="text-sm text-muted-foreground">Multi-criteria decision analysis for optimal asset selection</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <Tabs defaultValue="portfolio" className="animate-slide-up">
-        <TabsList className="grid w-full grid-cols-7 bg-card border border-card-border">
-          <TabsTrigger value="tutorial" className="flex items-center gap-2">
+      <Tabs defaultValue="portfolio" className="animate-slide-up max-w-7xl mx-auto px-4">
+        <TabsList className="grid w-full grid-cols-7 glass-card border border-card-border/50 p-2 rounded-2xl">
+          <TabsTrigger value="tutorial" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <BookOpen className="w-4 h-4" />
-            Tutorial
+            <span className="hidden sm:inline">Tutorial</span>
           </TabsTrigger>
-          <TabsTrigger value="portfolio" className="flex items-center gap-2">
+          <TabsTrigger value="portfolio" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <PieChart className="w-4 h-4" />
-            Portfolio
+            <span className="hidden sm:inline">Portfolio</span>
           </TabsTrigger>
-          <TabsTrigger value="recommendations" className="flex items-center gap-2">
+          <TabsTrigger value="recommendations" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <Target className="w-4 h-4" />
-            💡 Recommendations
+            <span className="hidden sm:inline">💡 Recommendations</span>
           </TabsTrigger>
-          <TabsTrigger value="simulation" className="flex items-center gap-2">
+          <TabsTrigger value="simulation" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <Calculator className="w-4 h-4" />
-            Simulation
+            <span className="hidden sm:inline">Simulation</span>
           </TabsTrigger>
-          <TabsTrigger value="results" className="flex items-center gap-2">
+          <TabsTrigger value="results" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <TrendingUp className="w-4 h-4" />
-            Results
+            <span className="hidden sm:inline">Results</span>
           </TabsTrigger>
-          <TabsTrigger value="risk" className="flex items-center gap-2">
+          <TabsTrigger value="risk" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <Target className="w-4 h-4" />
-            Risk Metrics
+            <span className="hidden sm:inline">Risk Metrics</span>
           </TabsTrigger>
-          <TabsTrigger value="topsis" className="flex items-center gap-2">
+          <TabsTrigger value="topsis" className="flex items-center gap-2 rounded-xl transition-all duration-300 hover:bg-card/60">
             <Target className="w-4 h-4" />
-            TOPSIS
+            <span className="hidden sm:inline">TOPSIS</span>
           </TabsTrigger>
         </TabsList>
 
