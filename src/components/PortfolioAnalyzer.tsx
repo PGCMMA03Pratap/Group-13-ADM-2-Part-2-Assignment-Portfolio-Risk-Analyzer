@@ -24,6 +24,7 @@ import { AssetAllocation } from '@/components/AssetAllocation';
 import { Tutorial } from '@/components/Tutorial';
 import { TOPSISRanking } from '@/components/TOPSISRanking';
 import { PortfolioRecommendations } from '@/components/PortfolioRecommendations';
+import StockHeatMap from '@/components/StockHeatMap';
 
 const defaultAssets: Asset[] = [
   { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 20, expectedReturn: 0.13, volatility: 0.24, price: 29050 },
@@ -476,6 +477,7 @@ export function PortfolioAnalyzer() {
                   Export with Formulas
                 </Button>
               </div>
+              <StockHeatMap assets={assets} initialValue={initialValue} />
               <MonteCarloChart results={results} initialValue={initialValue} />
             </div>
           ) : (
