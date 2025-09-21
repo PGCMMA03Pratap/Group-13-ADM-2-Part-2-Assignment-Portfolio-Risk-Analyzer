@@ -26,16 +26,16 @@ import { TOPSISRanking } from '@/components/TOPSISRanking';
 import { PortfolioRecommendations } from '@/components/PortfolioRecommendations';
 
 const defaultAssets: Asset[] = [
-  { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 20, expectedReturn: 0.13, volatility: 0.24, price: 350 },
-  { symbol: 'TSLA', name: 'Tesla Inc.', weight: 25, expectedReturn: 0.18, volatility: 0.45, price: 250 },
-  { symbol: 'NVDA', name: 'NVIDIA Corp.', weight: 20, expectedReturn: 0.20, volatility: 0.35, price: 900 },
-  { symbol: 'AAPL', name: 'Apple Inc.', weight: 20, expectedReturn: 0.12, volatility: 0.25, price: 150 },
-  { symbol: 'GOOGL', name: 'Alphabet Inc.', weight: 15, expectedReturn: 0.15, volatility: 0.28, price: 2800 }
+  { symbol: 'MSFT', name: 'Microsoft Corp.', weight: 20, expectedReturn: 0.13, volatility: 0.24, price: 29050 },
+  { symbol: 'TSLA', name: 'Tesla Inc.', weight: 25, expectedReturn: 0.18, volatility: 0.45, price: 20750 },
+  { symbol: 'NVDA', name: 'NVIDIA Corp.', weight: 20, expectedReturn: 0.20, volatility: 0.35, price: 74700 },
+  { symbol: 'AAPL', name: 'Apple Inc.', weight: 20, expectedReturn: 0.12, volatility: 0.25, price: 12450 },
+  { symbol: 'GOOGL', name: 'Alphabet Inc.', weight: 15, expectedReturn: 0.15, volatility: 0.28, price: 232400 }
 ];
 
 export function PortfolioAnalyzer() {
   const [assets, setAssets] = useState<Asset[]>(defaultAssets);
-  const [initialValue, setInitialValue] = useState(100000);
+  const [initialValue, setInitialValue] = useState(1000000);
   const [timeHorizon, setTimeHorizon] = useState(252);
   const [simulations, setSimulations] = useState(10000);
   const [isRunning, setIsRunning] = useState(false);
@@ -212,7 +212,7 @@ export function PortfolioAnalyzer() {
           </TabsTrigger>
           <TabsTrigger value="recommendations" className="flex items-center gap-2">
             <Target className="w-4 h-4" />
-            Recommendations
+            💡 Recommendations
           </TabsTrigger>
           <TabsTrigger value="simulation" className="flex items-center gap-2">
             <Calculator className="w-4 h-4" />
@@ -319,7 +319,7 @@ export function PortfolioAnalyzer() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor={`price-${index}`}>Price ($)</Label>
+                      <Label htmlFor={`price-${index}`}>Price (₹)</Label>
                       <Input
                         id={`price-${index}`}
                         type="number"

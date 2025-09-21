@@ -118,7 +118,7 @@ export const exportResultsToExcel = (
     Weight: `${asset.weight.toFixed(2)}%`,
     'Expected Return': `${(asset.expectedReturn * 100).toFixed(2)}%`,
     'Volatility': `${(asset.volatility * 100).toFixed(2)}%`,
-    'Current Price': `$${asset.price.toFixed(2)}`
+    'Current Price': `₹${asset.price.toFixed(2)}`
   }));
   
   const portfolioWs = XLSX.utils.json_to_sheet(portfolioData);
@@ -126,7 +126,7 @@ export const exportResultsToExcel = (
 
   // Simulation Parameters
   const parametersData = [
-    { Parameter: 'Initial Portfolio Value', Value: `$${initialValue.toLocaleString()}` },
+    { Parameter: 'Initial Portfolio Value', Value: `₹${initialValue.toLocaleString()}` },
     { Parameter: 'Time Horizon', Value: `${timeHorizon} days` },
     { Parameter: 'Number of Simulations', Value: simulations.toLocaleString() },
     { Parameter: 'Analysis Date', Value: new Date().toLocaleDateString() }
@@ -139,14 +139,14 @@ export const exportResultsToExcel = (
   if (results?.multiPeriodProjections) {
     const projectionData = results.multiPeriodProjections.map((projection: any) => ({
       'Time Period': projection.period,
-      'Expected Value': `$${projection.percentiles.p50.toFixed(2)}`,
+      'Expected Value': `₹${projection.percentiles.p50.toFixed(2)}`,
       'Total Return (Median)': `${projection.totalReturn.p50.toFixed(2)}%`,
       'Annualized Return': `${projection.annualizedReturn.toFixed(2)}%`,
       'Probability of Loss': `${projection.probabilityOfLoss.toFixed(2)}%`,
-      '5th Percentile Value': `$${projection.percentiles.p5.toFixed(2)}`,
-      '25th Percentile Value': `$${projection.percentiles.p25.toFixed(2)}`,
-      '75th Percentile Value': `$${projection.percentiles.p75.toFixed(2)}`,
-      '95th Percentile Value': `$${projection.percentiles.p95.toFixed(2)}`,
+      '5th Percentile Value': `₹${projection.percentiles.p5.toFixed(2)}`,
+      '25th Percentile Value': `₹${projection.percentiles.p25.toFixed(2)}`,
+      '75th Percentile Value': `₹${projection.percentiles.p75.toFixed(2)}`,
+      '95th Percentile Value': `₹${projection.percentiles.p95.toFixed(2)}`,
       '5th Percentile Return': `${projection.totalReturn.p5.toFixed(2)}%`,
       '25th Percentile Return': `${projection.totalReturn.p25.toFixed(2)}%`,
       '75th Percentile Return': `${projection.totalReturn.p75.toFixed(2)}%`,
@@ -160,11 +160,11 @@ export const exportResultsToExcel = (
   // Monte Carlo Results
   if (results) {
     const resultsData = [
-      { Metric: 'Mean Final Value', Value: `$${results.mean?.toFixed(2) || 'N/A'}` },
-      { Metric: 'Median Final Value (P50)', Value: `$${results.percentiles?.p50?.toFixed(2) || 'N/A'}` },
-      { Metric: '5th Percentile (P5)', Value: `$${results.percentiles?.p5?.toFixed(2) || 'N/A'}` },
-      { Metric: '95th Percentile (P95)', Value: `$${results.percentiles?.p95?.toFixed(2) || 'N/A'}` },
-      { Metric: 'Standard Deviation', Value: `$${results.stdDev?.toFixed(2) || 'N/A'}` },
+      { Metric: 'Mean Final Value', Value: `₹${results.mean?.toFixed(2) || 'N/A'}` },
+      { Metric: 'Median Final Value (P50)', Value: `₹${results.percentiles?.p50?.toFixed(2) || 'N/A'}` },
+      { Metric: '5th Percentile (P5)', Value: `₹${results.percentiles?.p5?.toFixed(2) || 'N/A'}` },
+      { Metric: '95th Percentile (P95)', Value: `₹${results.percentiles?.p95?.toFixed(2) || 'N/A'}` },
+      { Metric: 'Standard Deviation', Value: `₹${results.stdDev?.toFixed(2) || 'N/A'}` },
       { Metric: 'Expected Return', Value: `${((results.expectedReturn || 0) * 100).toFixed(2)}%` },
       { Metric: 'Portfolio Volatility', Value: `${((results.volatility || 0) * 100).toFixed(2)}%` },
       { Metric: 'Sharpe Ratio', Value: results.sharpeRatio?.toFixed(3) || 'N/A' }
@@ -177,8 +177,8 @@ export const exportResultsToExcel = (
   // Risk Metrics
   if (riskMetrics) {
     const riskData = [
-      { Metric: 'Value at Risk (95%)', Value: `$${Math.abs(riskMetrics.var95 || 0).toFixed(2)}` },
-      { Metric: 'Conditional VaR', Value: `$${Math.abs(riskMetrics.cvar95 || 0).toFixed(2)}` },
+      { Metric: 'Value at Risk (95%)', Value: `₹${Math.abs(riskMetrics.var95 || 0).toFixed(2)}` },
+      { Metric: 'Conditional VaR', Value: `₹${Math.abs(riskMetrics.cvar95 || 0).toFixed(2)}` },
       { Metric: 'Maximum Drawdown', Value: `${((riskMetrics.maxDrawdown || 0) * 100).toFixed(2)}%` },
       { Metric: 'Sharpe Ratio', Value: (riskMetrics.sharpeRatio || 0).toFixed(3) },
       { Metric: 'Portfolio Beta', Value: (riskMetrics.beta || 0).toFixed(3) },

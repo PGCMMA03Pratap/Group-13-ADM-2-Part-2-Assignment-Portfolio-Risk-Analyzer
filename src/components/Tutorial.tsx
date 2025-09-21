@@ -261,7 +261,7 @@ export function Tutorial() {
                   
                   <h4 className="font-medium">Key Parameters:</h4>
                   <ul className="space-y-2 text-sm">
-                    <li><strong>Initial Value:</strong> Starting portfolio amount ($100,000 default)</li>
+                    <li><strong>Initial Value:</strong> Starting portfolio amount (₹1,00,000 default)</li>
                     <li><strong>Time Horizon:</strong> Investment period in days (252 = 1 year)</li>
                     <li><strong>Simulations:</strong> Number of random paths (10,000+ recommended)</li>
                   </ul>
