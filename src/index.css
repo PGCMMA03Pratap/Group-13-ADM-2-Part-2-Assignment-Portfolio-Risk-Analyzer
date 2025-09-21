@@ -6,68 +6,69 @@
 
 @layer base {
   :root {
-    /* Core Background Colors */
-    --background: 210 24% 6%;
-    --background-secondary: 210 20% 8%;
-    --background-tertiary: 210 16% 10%;
+    /* Core Background Colors - Deep Modern Dark */
+    --background: 230 25% 3%;
+    --background-secondary: 230 20% 5%;
+    --background-tertiary: 230 15% 8%;
     --foreground: 210 40% 98%;
 
-    /* Card System */
-    --card: 210 20% 8%;
-    --card-hover: 210 16% 10%;
+    /* Card System - Enhanced with subtle purple tint */
+    --card: 235 18% 7%;
+    --card-hover: 235 15% 10%;
     --card-foreground: 210 40% 98%;
-    --card-border: 210 15% 15%;
+    --card-border: 235 12% 18%;
 
     /* Popover */
-    --popover: 210 20% 8%;
+    --popover: 235 18% 7%;
     --popover-foreground: 210 40% 98%;
 
-    /* Primary - Financial Blue */
-    --primary: 210 100% 50%;
-    --primary-glow: 210 100% 60%;
-    --primary-dark: 210 100% 40%;
+    /* Primary - Electric Purple-Blue */
+    --primary: 260 100% 65%;
+    --primary-glow: 260 100% 75%;
+    --primary-dark: 260 100% 55%;
     --primary-foreground: 210 40% 98%;
 
-    /* Secondary - Teal Accent */
-    --secondary: 175 60% 45%;
-    --secondary-light: 175 60% 55%;
+    /* Secondary - Vibrant Cyan */
+    --secondary: 190 95% 55%;
+    --secondary-light: 190 95% 65%;
     --secondary-foreground: 210 40% 98%;
 
-    /* Success/Profit Green */
-    --success: 142 76% 36%;
-    --success-light: 142 69% 58%;
+    /* Success/Profit Green - Brighter */
+    --success: 150 90% 45%;
+    --success-light: 150 90% 60%;
     --success-foreground: 210 40% 98%;
 
-    /* Danger/Loss Red */
-    --destructive: 0 84% 60%;
-    --destructive-dark: 0 84% 45%;
+    /* Danger/Loss Red - More vibrant */
+    --destructive: 355 90% 65%;
+    --destructive-dark: 355 90% 55%;
     --destructive-foreground: 210 40% 98%;
 
     /* Muted Sections */
-    --muted: 210 15% 15%;
-    --muted-foreground: 215.4 16.3% 65%;
+    --muted: 235 12% 18%;
+    --muted-foreground: 225 15% 70%;
 
-    /* Accent Colors */
-    --accent: 210 15% 15%;
+    /* Accent Colors - Warm purple */
+    --accent: 270 60% 25%;
     --accent-foreground: 210 40% 98%;
 
     /* Form Elements */
-    --border: 210 15% 15%;
-    --input: 210 15% 15%;
-    --input-hover: 210 15% 18%;
-    --ring: 210 100% 50%;
+    --border: 235 12% 18%;
+    --input: 235 12% 18%;
+    --input-hover: 235 15% 22%;
+    --ring: 260 100% 65%;
 
-    /* Financial Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(210 100% 50%), hsl(175 60% 45%));
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 69% 58%));
-    --gradient-risk: linear-gradient(135deg, hsl(0 84% 45%), hsl(25 95% 53%));
-    --gradient-neutral: linear-gradient(135deg, hsl(210 15% 15%), hsl(210 20% 25%));
+    /* Enhanced Gradients - More vibrant */
+    --gradient-primary: linear-gradient(135deg, hsl(260 100% 65%), hsl(190 95% 55%));
+    --gradient-success: linear-gradient(135deg, hsl(150 90% 45%), hsl(150 90% 60%));
+    --gradient-risk: linear-gradient(135deg, hsl(355 90% 55%), hsl(25 95% 60%));
+    --gradient-neutral: linear-gradient(135deg, hsl(235 12% 18%), hsl(235 15% 25%));
+    --gradient-accent: linear-gradient(135deg, hsl(270 60% 25%), hsl(260 100% 65%));
 
-    /* Shadows and Glows */
-    --shadow-primary: 0 0 30px hsl(210 100% 50% / 0.3);
-    --shadow-success: 0 0 25px hsl(142 76% 36% / 0.2);
-    --shadow-card: 0 4px 20px hsl(210 24% 4% / 0.4);
-    --shadow-elevated: 0 8px 40px hsl(210 24% 4% / 0.6);
+    /* Enhanced Shadows and Glows */
+    --shadow-primary: 0 0 40px hsl(260 100% 65% / 0.4);
+    --shadow-success: 0 0 30px hsl(150 90% 45% / 0.3);
+    --shadow-card: 0 6px 25px hsl(230 25% 2% / 0.5);
+    --shadow-elevated: 0 12px 50px hsl(230 25% 2% / 0.7);
 
     /* Animation Variables */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -138,8 +139,9 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    background-image: radial-gradient(circle at 20% 50%, hsl(210 100% 50% / 0.1) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 20%, hsl(175 60% 45% / 0.1) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 20% 50%, hsl(260 100% 65% / 0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, hsl(190 95% 55% / 0.12) 0%, transparent 50%),
+                      radial-gradient(circle at 60% 80%, hsl(270 60% 25% / 0.08) 0%, transparent 40%);
   }
 }
 
