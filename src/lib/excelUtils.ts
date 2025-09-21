@@ -272,10 +272,10 @@ export const exportResultsWithFormulas = (
       { f: `(E19/InputData!$B$4-1)*100` }
     ],
     ['Annualized Return %',
-      { f: `B20` },
-      { f: `C20/3` },
-      { f: `D20/5` },
-      { f: `E20/10` }
+      { f: `((B19/InputData!$B$4)^(1/1)-1)*100` },
+      { f: `((C19/InputData!$B$4)^(1/3)-1)*100` },
+      { f: `((D19/InputData!$B$4)^(1/5)-1)*100` },
+      { f: `((E19/InputData!$B$4)^(1/10)-1)*100` }
     ],
     ['Probability of Loss %',
       { f: `NORMSDIST(-B21/InputData!B${calcRow + 1})*100` },
