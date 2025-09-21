@@ -194,3 +194,174 @@ export const exportResultsToExcel = (
   const fileName = `portfolio-analysis-${new Date().toISOString().split('T')[0]}.xlsx`;
   XLSX.writeFile(wb, fileName);
 };
+
+// New function to export with active Excel formulas
+export const exportResultsWithFormulas = (
+  assets: Asset[],
+  results: any,
+  riskMetrics: any,
+  initialValue: number,
+  timeHorizon: number,
+  simulations: number
+) => {
+  const wb = XLSX.utils.book_new();
+
+  // Input Data Sheet with formulas
+  const inputSheet = XLSX.utils.aoa_to_sheet([
+    ['Portfolio Analysis with Active Formulas'],
+    [''],
+    ['Input Parameters:'],
+    ['Initial Portfolio Value', initialValue],
+    ['Time Horizon (days)', timeHorizon],
+    ['Number of Simulations', simulations],
+    ['Risk-Free Rate', 0.03],
+    [''],
+    ['Asset Data:'],
+    ['Symbol', 'Weight (%)', 'Expected Return', 'Volatility', 'Current Price', 'Portfolio Value', 'Weighted Return', 'Weighted Risk'],
+    ...assets.map((asset, index) => [
+      asset.symbol,
+      asset.weight,
+      asset.expectedReturn,
+      asset.volatility,
+      asset.price,
+      { f: `B${11 + index}/100*$B$4` }, // Portfolio allocation formula
+      { f: `C${11 + index}*B${11 + index}/100` }, // Weighted return formula
+      { f: `D${11 + index}*B${11 + index}/100` } // Weighted risk formula
+    ]),
+    [''],
+    ['Portfolio Totals:'],
+    [`Total Weight`, { f: `SUM(B11:B${10 + assets.length})` }],
+    [`Portfolio Expected Return`, { f: `SUM(G11:G${10 + assets.length})` }],
+    [`Average Portfolio Volatility`, { f: `AVERAGE(H11:H${10 + assets.length})` }],
+    [`Total Portfolio Value`, { f: `SUM(F11:F${10 + assets.length})` }]
+  ]);
+
+  // Calculations Sheet with advanced formulas
+  const calcRow = 15 + assets.length;
+  const calculationsSheet = XLSX.utils.aoa_to_sheet([
+    ['Advanced Portfolio Calculations'],
+    [''],
+    ['Risk Metrics:'],
+    ['Sharpe Ratio', { f: `(InputData!B${calcRow}-(InputData!$B$7*100))/InputData!B${calcRow + 1}` }],
+    ['Portfolio Beta', riskMetrics?.beta || 1.0],
+    ['Value at Risk (95%)', { f: `InputData!$B$4*NORMSINV(0.05)*InputData!B${calcRow + 1}/100*SQRT(InputData!$B$5/365)` }],
+    ['Expected Shortfall (CVaR)', { f: `B6*1.2` }], // Approximation formula
+    ['Maximum Drawdown %', (riskMetrics?.maxDrawdown || 0) * 100],
+    [''],
+    ['Monte Carlo Projections:'],
+    ['Mean Final Value', { f: `InputData!$B$4*(1+InputData!B${calcRow}/100)^(InputData!$B$5/365)` }],
+    ['Standard Deviation', { f: `B10*InputData!B${calcRow + 1}/100*SQRT(InputData!$B$5/365)` }],
+    ['5th Percentile', { f: `B10+B11*NORMSINV(0.05)` }],
+    ['25th Percentile', { f: `B10+B11*NORMSINV(0.25)` }],
+    ['50th Percentile (Median)', { f: `B10` }],
+    ['75th Percentile', { f: `B10+B11*NORMSINV(0.75)` }],
+    ['95th Percentile', { f: `B10+B11*NORMSINV(0.95)` }],
+    [''],
+    ['Multi-Period Analysis:'],
+    ['Period', '1 Year', '3 Years', '5 Years', '10 Years'],
+    ['Expected Value', 
+      { f: `InputData!$B$4*(1+InputData!B${calcRow}/100)^1` },
+      { f: `InputData!$B$4*(1+InputData!B${calcRow}/100)^3` },
+      { f: `InputData!$B$4*(1+InputData!B${calcRow}/100)^5` },
+      { f: `InputData!$B$4*(1+InputData!B${calcRow}/100)^10` }
+    ],
+    ['Total Return %',
+      { f: `(B19/InputData!$B$4-1)*100` },
+      { f: `(C19/InputData!$B$4-1)*100` },
+      { f: `(D19/InputData!$B$4-1)*100` },
+      { f: `(E19/InputData!$B$4-1)*100` }
+    ],
+    ['Annualized Return %',
+      { f: `B20` },
+      { f: `C20/3` },
+      { f: `D20/5` },
+      { f: `E20/10` }
+    ],
+    ['Probability of Loss %',
+      { f: `NORMSDIST(-B21/InputData!B${calcRow + 1})*100` },
+      { f: `NORMSDIST(-C21/InputData!B${calcRow + 1})*100` },
+      { f: `NORMSDIST(-D21/InputData!B${calcRow + 1})*100` },
+      { f: `NORMSDIST(-E21/InputData!B${calcRow + 1})*100` }
+    ]
+  ]);
+
+  // Portfolio Optimization Sheet
+  const optimizationSheet = XLSX.utils.aoa_to_sheet([
+    ['Portfolio Optimization Formulas'],
+    [''],
+    ['Efficient Frontier Calculations:'],
+    ['Target Return', 0.08, 0.10, 0.12, 0.15, 0.18],
+    ['Required Volatility', 
+      { f: `SQRT(B4*InputData!B${calcRow + 1}/100)` },
+      { f: `SQRT(C4*InputData!B${calcRow + 1}/100)` },
+      { f: `SQRT(D4*InputData!B${calcRow + 1}/100)` },
+      { f: `SQRT(E4*InputData!B${calcRow + 1}/100)` },
+      { f: `SQRT(F4*InputData!B${calcRow + 1}/100)` }
+    ],
+    ['Sharpe Ratio',
+      { f: `(B4-InputData!$B$7)/B5` },
+      { f: `(C4-InputData!$B$7)/C5` },
+      { f: `(D4-InputData!$B$7)/D5` },
+      { f: `(E4-InputData!$B$7)/E5` },
+      { f: `(F4-InputData!$B$7)/F5` }
+    ],
+    [''],
+    ['Asset Allocation Recommendations:'],
+    ['Conservative Portfolio (Lower Risk):'],
+    ...assets.map((asset, index) => [
+      asset.symbol,
+      { f: `MIN(InputData!B${11 + index}*1.2, 40)` } // Conservative allocation formula
+    ]),
+    [''],
+    ['Aggressive Portfolio (Higher Return):'],
+    ...assets.map((asset, index) => [
+      asset.symbol,
+      { f: `InputData!B${11 + index}*InputData!C${11 + index}/InputData!B${calcRow}*100` } // Return-weighted allocation
+    ])
+  ]);
+
+  // Summary Dashboard
+  const dashboardSheet = XLSX.utils.aoa_to_sheet([
+    ['PORTFOLIO ANALYSIS DASHBOARD'],
+    [''],
+    ['Key Metrics Summary:'],
+    ['Current Portfolio Value', { f: `InputData!B${calcRow + 2}` }],
+    ['Expected Annual Return', { f: `InputData!B${calcRow}*100&"%"` }],
+    ['Portfolio Volatility', { f: `InputData!B${calcRow + 1}*100&"%"` }],
+    ['Sharpe Ratio', { f: `Calculations!B4` }],
+    ['Value at Risk (95%)', { f: `"$"&ABS(Calculations!B6)` }],
+    [''],
+    ['1-Year Projection:'],
+    ['Expected Value', { f: `"$"&Calculations!B19` }],
+    ['Best Case (95%)', { f: `"$"&Calculations!B16` }],
+    ['Worst Case (5%)', { f: `"$"&Calculations!B12` }],
+    ['Probability of Loss', { f: `Calculations!B22&"%"` }],
+    [''],
+    ['Portfolio Health Check:'],
+    ['Diversification Score', { f: `IF(InputData!B${calcRow - 3}>95,"Good","Needs Improvement")` }],
+    ['Risk Level', { f: `IF(InputData!B${calcRow + 1}<0.15,"Low",IF(InputData!B${calcRow + 1}<0.25,"Medium","High"))` }],
+    ['Return Potential', { f: `IF(InputData!B${calcRow}>0.12,"High",IF(InputData!B${calcRow}>0.08,"Medium","Low"))` }]
+  ]);
+
+  // Set column widths for better readability
+  inputSheet['!cols'] = [
+    { width: 20 }, { width: 15 }, { width: 18 }, { width: 15 }, 
+    { width: 15 }, { width: 18 }, { width: 18 }, { width: 15 }
+  ];
+
+  calculationsSheet['!cols'] = [
+    { width: 25 }, { width: 15 }, { width: 15 }, { width: 15 }, { width: 15 }
+  ];
+
+  dashboardSheet['!cols'] = [{ width: 25 }, { width: 20 }];
+
+  // Add sheets to workbook
+  XLSX.utils.book_append_sheet(wb, inputSheet, 'InputData');
+  XLSX.utils.book_append_sheet(wb, calculationsSheet, 'Calculations');
+  XLSX.utils.book_append_sheet(wb, optimizationSheet, 'Optimization');
+  XLSX.utils.book_append_sheet(wb, dashboardSheet, 'Dashboard');
+
+  // Export file with formulas
+  const fileName = `portfolio-analysis-formulas-${new Date().toISOString().split('T')[0]}.xlsx`;
+  XLSX.writeFile(wb, fileName);
+};

@@ -17,7 +17,7 @@ import {
   calculateAHPWeights,
   generateSampleData
 } from '@/lib/analytics';
-import { downloadTemplateExcel, parseExcelFile, exportResultsToExcel } from '@/lib/excelUtils';
+import { downloadTemplateExcel, parseExcelFile, exportResultsToExcel, exportResultsWithFormulas } from '@/lib/excelUtils';
 import { MonteCarloChart } from '@/components/MonteCarloChart';
 import { RiskMetricsDisplay } from '@/components/RiskMetricsDisplay';
 import { AssetAllocation } from '@/components/AssetAllocation';
@@ -119,6 +119,16 @@ export function PortfolioAnalyzer() {
     
     exportResultsToExcel(assets, results, riskMetrics, initialValue, timeHorizon, simulations);
     toast.success('Results exported to Excel successfully');
+  };
+
+  const handleDownloadResultsWithFormulas = () => {
+    if (!results || !riskMetrics) {
+      toast.error('Please run the analysis first to generate results');
+      return;
+    }
+    
+    exportResultsWithFormulas(assets, results, riskMetrics, initialValue, timeHorizon, simulations);
+    toast.success('Results with active formulas exported to Excel successfully');
   };
 
   const runAnalysis = async () => {
@@ -449,7 +459,7 @@ export function PortfolioAnalyzer() {
         <TabsContent value="results" className="space-y-6">
           {results ? (
             <div className="space-y-6">
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-2 flex-wrap">
                 <Button 
                   onClick={handleDownloadResults}
                   variant="outline"
@@ -457,6 +467,13 @@ export function PortfolioAnalyzer() {
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Export to Excel
+                </Button>
+                <Button 
+                  onClick={handleDownloadResultsWithFormulas}
+                  className="btn-financial-primary"
+                >
+                  <Calculator className="w-4 h-4 mr-2" />
+                  Export with Formulas
                 </Button>
               </div>
               <MonteCarloChart results={results} initialValue={initialValue} />
